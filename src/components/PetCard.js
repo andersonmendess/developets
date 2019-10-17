@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Icon } from 'semantic-ui-react';
+import { Card, Icon, Image } from 'semantic-ui-react';
 import placeholder from '../assets/img/paw.png';
 
 export const PetCard = (pet, index) => {
@@ -13,19 +13,18 @@ export const PetCard = (pet, index) => {
   );
 
   return (
-    <Card
-      key={index}
-      image={pet.img || placeholder}
-      header={pet.name}
-      meta={`the ${pet.type}`}
-      description={pet.description}
-      extra={pet.owner ? extra : null}
-    />
+    <Card key={index}>
+      <Image src={pet.img || placeholder} onError={(e) => e.target.src = placeholder} />
+      <Card.Content>
+        <Card.Header>{pet.name}</Card.Header>
+        <Card.Meta>
+          {`the ${pet.type}`}
+        </Card.Meta>
+        <Card.Description>
+          {pet.description}
+        </Card.Description>
+      </Card.Content>
+      {pet.owner ? extra : null}
+    </Card>
   );
 };
-
-document.addEventListener("DOMContentLoaded", function(event) {
-  document.querySelectorAll('img').forEach(function(img){
-    img.onerror = function(){this.src=placeholder;};
-  });
-});

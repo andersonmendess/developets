@@ -3,11 +3,22 @@ import { Container, Card, Header, Icon } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 import { PetCard } from './components/PetCard';
-import { pets } from './data/pets';
 
 class App extends Component {
+
+  state = {
+    pets: []
+  }
+
+  async componentDidMount() {
+    const res = await fetch("/developets/data.json");
+    const resJson = await res.json();
+
+    this.setState({ pets: resJson });
+  }
+
   render() {
-    const petCards = pets.map((pet, index) => PetCard(pet, index));
+    const petCards = this.state.pets.map((pet, index) => PetCard(pet, index));
     return (
       <div className="App">
         <header className="App-header">
